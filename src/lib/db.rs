@@ -31,7 +31,8 @@ impl Writeable for Event {
                 start INTEGER NOT NULL,
                 end INTEGER,
                 description TEXT,
-                UNIQUE(title, start)
+                UNIQUE(title, start),
+                CHECK(start < end)
             );",
                 opts.calendar_name
             )
