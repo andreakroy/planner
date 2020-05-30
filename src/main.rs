@@ -9,8 +9,10 @@ fn main() {
     let cmd = SubCommands::from_args();
     match cmd {
         SubCommands::Add(opts) => {
-            Event::write(&opts).unwrap();
-            println!("Event written to calendar.");
+            match Event::write(&opts) {
+                Ok(()) => println!("Event written to [{}].", &opts.calendar_name),
+                Err(e) => println!("{}", e)
+            };
         }
         SubCommands::List(opts) => {
             match Event::read(&opts) {
@@ -33,7 +35,7 @@ fn main() {
         }
         SubCommands::Remove(opts) => {
             match Event::remove(&opts) {
-                Ok(()) => println!("Calendar [{}] successfully deleted.", &opts.calendar_name),
+                Ok(()) => println!("Calendar [{}] deleted.", &opts.calendar_name),
                 Err(e) => println!("{}", e),
             };
         }

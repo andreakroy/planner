@@ -51,9 +51,9 @@ impl Writeable for Event {
             Some(d) => Some(d.to_owned()),
             None => None,
         };
-        con.execute(
-            "INSERT INTO events (title, start, end, description)
-                    VALUES (?1, ?2, ?3, ?4)",
+        con.execute(format!(
+            "INSERT INTO {} (title, start, end, description)
+                    VALUES (?1, ?2, ?3, ?4)", &self.calendar_name).as_str(),
             params![
                 &self.title,
                 &(self.start).timestamp().to_string(),
@@ -112,8 +112,8 @@ impl Writeable for Event {
             (false, false, false, true) => Ok(rows
                 .into_iter()
                 .filter(|x| {
-                    x.start.date().month() == today.month() && x.start.date().year() == today.year()
-                })
+                    x.start.date().month() == today.month()
+                        && x.start.date().year() == today.year()})
                 .collect::<Vec<Self>>()),
             _ => Ok(rows
                 .into_iter()
