@@ -11,7 +11,7 @@ fn main() {
         SubCommands::Add(opts) => {
             Event::write(&opts).unwrap();
             println!("Event written to calendar.");
-        },
+        }
         SubCommands::List(opts) => {
             match Event::read(&opts) {
                 Ok(events) => {
@@ -21,20 +21,20 @@ fn main() {
                     for event in events {
                         println!("{}", event);
                     }
-                },
-                Err(e) => println!("{}", e)
+                }
+                Err(e) => println!("{}", e),
             };
-        },
+        }
         SubCommands::New(opts) => {
             match Event::create(&opts) {
                 Ok(()) => println!("New calendar [{}] created.", &opts.calendar_name),
-                Err(e) => println!("{}", e)
+                Err(e) => println!("{}", e),
             };
         }
         SubCommands::Remove(opts) => {
             match Event::remove(&opts) {
                 Ok(()) => println!("Calendar [{}] successfully deleted.", &opts.calendar_name),
-                Err(e) => println!("{}", e)
+                Err(e) => println!("{}", e),
             };
         }
     };
